@@ -1,5 +1,6 @@
 package com.championrotation.championrotation.controller;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Iterator;
+
 
 @RestController
 @RequestMapping("/api/v1/champion")
@@ -19,8 +20,10 @@ import java.util.Iterator;
         RestTemplate restTemplate = new RestTemplate();
         String result = restTemplate.getForObject(uri,String.class);
         JSONObject jsonObject= new JSONObject(result );
-        System.out.println(jsonObject.get("freeChampionIds"));
-
+        JSONArray jsonArray = jsonObject.getJSONArray("freeChampionIds");
+        for (int i = 0; i < jsonArray.length(); i++) {
+            System.out.println(jsonArray.get(i));
+        }
         return  result;
     }
 }
